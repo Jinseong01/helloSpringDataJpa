@@ -1,7 +1,8 @@
-package hw2.service;
+package hw2.service.product;
 
 import hw2.entity.Product;
-import hw2.repo.ProductRepository;
+import hw2.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +12,10 @@ import java.util.NoSuchElementException;
 
 @Service
 @Transactional
-public class ProductService {
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository repo;
+    private final ProductRepository repo;
 
     public Product get(long id) {
         return repo.findById(id)

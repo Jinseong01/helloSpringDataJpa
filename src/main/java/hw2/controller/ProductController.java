@@ -1,8 +1,8 @@
 package hw2.controller;
 
 import hw2.entity.Product;
-import hw2.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import hw2.service.product.ProductServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductServiceImpl service;
 
     @GetMapping({"", "/"}) // products 또는 /products/ 둘 다 매핑
     public String viewHomePage(Model model) {
@@ -22,7 +22,7 @@ public class ProductController {
         List<Product> listProducts = service.listAll();
         model.addAttribute("listProducts", listProducts);
 
-        return "index";
+        return "product/index";
     }
 
     @GetMapping("/new")
@@ -31,7 +31,7 @@ public class ProductController {
         Product product = new Product();
         model.addAttribute("product", product);
 
-        return "new_product";
+        return "product/new_product";
     }
 
     @GetMapping("/edit/{id}")
@@ -40,7 +40,7 @@ public class ProductController {
         Product product = service.get(id);
         model.addAttribute("product", product);
 
-        return "edit_product";
+        return "product/edit_product";
     }
 
     // @ModelAttribute는  Form data (예: name=Laptop&brand=Samsung&madeIn=Korea&price=1000.00)를 Product 객체

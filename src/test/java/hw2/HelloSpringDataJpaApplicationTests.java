@@ -2,7 +2,7 @@ package hw2;
 
 import jakarta.transaction.Transactional;
 import hw2.entity.Product;
-import hw2.repo.ProductRepository;
+import hw2.repository.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
