@@ -2,6 +2,8 @@ package hw2.service.auth;
 
 import hw2.entity.Member;
 import hw2.entity.Role;
+import hw2.entity.RoleType;
+import hw2.exception.EmailAlreadyExistsException;
 import hw2.repository.MemberRepository;
 import hw2.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,36 +24,29 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Member createMember(Member member, List<Role> memberRoles) {
-        for (Role mr : memberRoles) {
-            if (roleRepository.findByRolename(mr.getRolename()).isEmpty()) {
-                roleRepository.save(mr);
-            }
+    public Member createMember(Member member) {
+        // 1. 이메일 중복 검사
+        if (memberRepository.findByEmail(member.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("이미 존재하는 이메일입니다: " + member.getEmail());
         }
 
-        // generate new Bcrypt hash
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        // 2. 사용자 권한 설정
+        List<Role> roles = new ArrayList<>();
+        roles.add(getRole(RoleType.ROLE_USER));
 
-        member.setRoles(memberRoles);
-
-        Member newMember = memberRepository.save(member);
-
-        return newMember;
-    }
-
-    @Override
-    public boolean checkEmailExists(String email) {
-        if (memberRepository.findByEmail(email).isPresent()) {
-            return true;
+        if ("admin@hansung.ac.kr".equals(member.getEmail())) {
+            roles.add(getRole(RoleType.ROLE_ADMIN));
         }
 
-        return false;
+        // 3. 비밀번호 암호화 & 저장
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        member.setRoles(roles);
+
+        return memberRepository.save(member);
     }
 
-    @Override
-    public Role findByRolename(String rolename) {
-        Optional<Role> role = roleRepository.findByRolename(rolename);
-        return role.orElseGet(() -> new Role(rolename));
+    private Role getRole(RoleType type) {
+        return roleRepository.findByRolename(type)
+                .orElseThrow(() -> new RuntimeException("Role 없음: " + type));
     }
 }

@@ -19,12 +19,13 @@ public class Role
     private Long id;
 
     @Column(nullable=false, unique=true)
-    private String rolename;
+    @Enumerated(EnumType.STRING)
+    private RoleType rolename;
 
     @ManyToMany(mappedBy="roles")
     private List<Member> members;
 
-    public Role(String rolename) {
+    public Role(RoleType rolename) {
         this.rolename = rolename;
     }
 }

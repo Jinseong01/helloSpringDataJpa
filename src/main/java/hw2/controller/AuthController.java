@@ -1,7 +1,7 @@
 package hw2.controller;
 
 import hw2.entity.Member;
-import hw2.entity.Role;
+import hw2.exception.EmailAlreadyExistsException;
 import hw2.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
@@ -43,25 +40,15 @@ public class AuthController {
             return "auth/signup";
         }
 
-        if (authService.checkEmailExists(member.getEmail())) {
+        // 회원가입 진행
+        try {
+            authService.createMember(member);
+            return "redirect:/";
+        }
+        // 이메일 중복 예외 발생 시
+        catch (EmailAlreadyExistsException e) {
             model.addAttribute("emailExists", true);
             return "auth/signup";
-        }
-        else {
-            List<Role> memberRoles = new ArrayList<>();
-
-            Role role = authService.findByRolename("ROLE_USER");
-            memberRoles.add(role);
-
-            // 특정 이메일 주소인 경우 ADMIN 역할 추가
-            if ("admin@hansung.ac.kr".equals(member.getEmail())) {
-                Role roleAdmin = authService.findByRolename("ROLE_ADMIN");
-                memberRoles.add(roleAdmin);
-            }
-
-            authService.createMember(member, memberRoles);
-
-            return "redirect:/";
         }
     }
 
