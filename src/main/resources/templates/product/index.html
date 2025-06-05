@@ -9,10 +9,26 @@
 <body>
 <div class="container">
   <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+
+    <!-- 성공 메시지 -->
+    <div th:if="${not #strings.isEmpty(success)}"
+         class="alert alert-success"
+         th:text="${success}">
+    </div>
+
     <h1>Product List</h1>
-    <form th:action="@{/logout}" method="post">
-      <button type="submit" class="btn btn-outline-secondary">Logout</button>
-    </form>
+
+    <div class="d-flex align-items-center">
+      <!-- 관리자 전용 버튼 -->
+      <th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a class="btn btn-outline-warning me-2" th:href="@{/admin/users}">관리자 페이지</a>
+      </th:block>
+
+      <!-- 로그아웃 버튼 -->
+      <form th:action="@{/logout}" method="post" class="m-0">
+        <button type="submit" class="btn btn-outline-secondary">Logout</button>
+      </form>
+    </div>
   </div>
   <form th:action="@{/products/new}" method="get" style="display:inline;">
     <button class="btn btn-primary mb-3"

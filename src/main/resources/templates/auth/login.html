@@ -12,15 +12,16 @@
     <div class="col-md-6">
       <h1 class="text-center mb-4">로그인</h1>
 
+      <!-- 에러 메시지 -->
+      <div th:if="${errorMsg}" class="alert alert-danger" th:text="${errorMsg}"></div>
+
+      <!-- 로그아웃 메시지 -->
+      <div th:if="${logoutMsg}" class="alert alert-success" th:text="${logoutMsg}"></div>
+
+      <!-- 로그인 성공 메시지 -->
+      <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
       <form method="post" th:action="@{/login}">
-        <div th:if="${param.error}" class="alert alert-danger" role="alert">
-          Invalid Email and Password.
-        </div>
-
-        <div th:if="${param.logout}" class="alert alert-info" role="alert">
-          Successfully logged out
-        </div>
-
         <div class="form-floating mb-2">
           <input type="email" id="username" name="username" class="form-control" placeholder="Email" required autofocus>
           <label for="username">Email address</label>

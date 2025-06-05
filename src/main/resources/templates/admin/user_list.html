@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{common :: commonHead}">
+    <title>회원 목록</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">전체 사용자 목록</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>권한</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.email}"></td>
+            <td>
+                <span th:each="role : ${member.roles}" th:text="${role.rolename} + ' '"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary mt-3" th:href="@{/products}">← 상품 목록으로 돌아가기</a>
+</div>
+<div th:insert="~{common :: commonScript}"></div>
+</body>
+</html>

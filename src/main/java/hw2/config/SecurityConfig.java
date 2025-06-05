@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
                         .requestMatchers("/", "/auth/**").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/products", "/products/").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/products/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/products")
+                        .defaultSuccessUrl("/", true)
                         .failureUrl("/auth/login?error")
                         .permitAll()
                 )
