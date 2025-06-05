@@ -1,4 +1,4 @@
-package kr.ac.hansung.cse.hellospringdatajpa.entity;
+package hw2.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

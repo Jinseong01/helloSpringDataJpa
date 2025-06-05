@@ -1,7 +1,7 @@
-package kr.ac.hansung.cse.hellospringdatajpa.service;
+package hw2.service;
 
-import kr.ac.hansung.cse.hellospringdatajpa.entity.Product;
-import kr.ac.hansung.cse.hellospringdatajpa.repo.ProductRepository;
+import hw2.entity.Product;
+import hw2.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

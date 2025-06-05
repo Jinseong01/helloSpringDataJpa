@@ -1,7 +1,7 @@
-package kr.ac.hansung.cse.hellospringdatajpa.controller;
+package hw2.controller;
 
-import kr.ac.hansung.cse.hellospringdatajpa.entity.Product;
-import kr.ac.hansung.cse.hellospringdatajpa.service.ProductService;
+import hw2.entity.Product;
+import hw2.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
