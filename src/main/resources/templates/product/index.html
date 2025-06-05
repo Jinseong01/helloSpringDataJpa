@@ -14,7 +14,12 @@
       <button type="submit" class="btn btn-outline-secondary">Logout</button>
     </form>
   </div>
-  <a class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
+  <form th:action="@{/products/new}" method="get" style="display:inline;">
+    <button class="btn btn-primary mb-3"
+            th:attr="disabled=${!#authorization.expression('hasRole(''ADMIN'')')}">
+      Create New Product
+    </button>
+  </form>
 
   <table class="table table-bordered">
     <thead>
@@ -35,8 +40,19 @@
       <td th:text="${product.madeIn}">Made in</td>
       <td th:text="${product.price}">Price</td>
       <td>
-        <a class="btn btn-primary btn-sm" th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
-        <a class="btn btn-danger btn-sm" th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
+        <form th:action="@{'/products/edit/' + ${product.id}}" method="get" style="display:inline;">
+          <button class="btn btn-primary btn-sm"
+                  th:attr="disabled=${!#authorization.expression('hasRole(''ADMIN'')')}">
+            Edit
+          </button>
+        </form>
+
+        <form th:action="@{'/products/delete/' + ${product.id}}" method="get" style="display:inline;">
+          <button class="btn btn-danger btn-sm"
+                  th:attr="disabled=${!#authorization.expression('hasRole(''ADMIN'')')}">
+            Delete
+          </button>
+        </form>
       </td>
     </tr>
     </tbody>
