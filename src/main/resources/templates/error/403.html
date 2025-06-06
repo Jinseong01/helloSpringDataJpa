@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{common :: commonHead}">
+    <title>접근 거부</title>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 text-danger">⚠️ 접근이 거부되었습니다</h1>
+            <p class="lead mt-4">이 페이지에 접근할 권한이 없습니다.</p>
+            <a th:href="@{/}" class="btn btn-outline-primary mt-3">홈으로 이동</a>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{common :: commonScript}"></div>
+</body>
+</html>

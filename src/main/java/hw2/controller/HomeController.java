@@ -7,6 +7,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
+
     @GetMapping("/")
     public String rootRedirect(Authentication authentication, RedirectAttributes redirectAttributes) {
         if (authentication != null && authentication.isAuthenticated()) {

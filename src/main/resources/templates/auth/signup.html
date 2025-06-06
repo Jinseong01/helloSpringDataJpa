@@ -16,9 +16,7 @@
       <form th:action="@{/auth/signup}" th:object="${member}" method="post">
 
         <!-- 이메일 중복 경고 -->
-        <div th:if="${emailExists}" class="alert alert-danger" role="alert">
-          Email already exists
-        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger" th:text="${errorMsg}"></div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Your Email:</label>
@@ -34,6 +32,11 @@
 
         <div class="d-grid">
           <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+        </div>
+
+        <div class="text-center mt-3">
+          <span>이미 계정이 있으신가요?</span>
+          <a th:href="@{/auth/login}" class="btn btn-outline-secondary btn-sm ms-2">로그인</a>
         </div>
       </form>
     </div>

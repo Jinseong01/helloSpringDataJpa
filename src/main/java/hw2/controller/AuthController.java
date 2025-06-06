@@ -44,7 +44,7 @@ public class AuthController {
         }
         // 이메일 중복 예외 발생 시
         catch (EmailAlreadyExistsException e) {
-            model.addAttribute("emailExists", true);
+            model.addAttribute("errorMsg", e.getMessage());
             return "auth/signup";
         }
     }
@@ -59,7 +59,7 @@ public class AuthController {
             model.addAttribute("errorMsg", "아이디 또는 비밀번호가 올바르지 않습니다.");
         }
         if (logout != null) {
-            model.addAttribute("logoutMsg", "성공적으로 로그아웃되었습니다.");
+            model.addAttribute("logoutMsg", "로그아웃되었습니다.");
         }
         return "auth/login";
     }

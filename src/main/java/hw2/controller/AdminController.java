@@ -2,6 +2,7 @@ package hw2.controller;
 
 import hw2.entity.Member;
 import hw2.repository.MemberRepository;
+import hw2.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final MemberRepository memberRepository;
+    private final AdminService adminService;
 
     @GetMapping("/users")
     public String viewUserList(Model model) {
-        List<Member> members = memberRepository.findAll();
+        List<Member> members = adminService.getAllMembers();
         model.addAttribute("members", members);
         return "admin/user_list";
     }

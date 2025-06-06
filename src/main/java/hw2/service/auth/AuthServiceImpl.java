@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     public Member createMember(Member member) {
         // 1. 이메일 중복 검사
         if (memberRepository.findByEmail(member.getEmail()).isPresent()) {
-            throw new EmailAlreadyExistsException("이미 존재하는 이메일입니다: " + member.getEmail());
+            throw new EmailAlreadyExistsException("이미 존재하는 이메일입니다.");
         }
 
         // 2. 사용자 권한 설정

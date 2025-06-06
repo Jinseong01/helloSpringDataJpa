@@ -5,11 +5,11 @@ import hw2.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    public Product get(long id);
+    Product get(long id);
 
-    public List<Product> listAll();
+    List<Product> listAll();
 
-    public void save(Product product);
+    void save(Product product);
 
-    public void delete(long id);
+    void delete(long id);
 }
